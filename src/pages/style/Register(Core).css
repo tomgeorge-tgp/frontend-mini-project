@@ -1,0 +1,49 @@
+.sign-up-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 50px;
+}
+
+h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+  width: 100%;
+  max-width: 400px;
+}
+
+label {
+  font-size: 1.2rem;
+  margin-bottom: 5px;
+}
+
+input,
+select {
+  font-size: 1.2rem;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  outline: none;
+  width: 100%;
+}
+
+button[type="submit"] {
+  font-size: 1.2rem;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+  background-color: #0062cc;
+}
