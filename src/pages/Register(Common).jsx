@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './SignUpForm.css';
+import './register(common).css';
 
 const SignUpForm = () => {
   const [name, setName] = useState('');
