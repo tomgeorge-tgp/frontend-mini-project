@@ -1,44 +1,41 @@
-.login-page {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 20px;
-}
+import React, { useState } from 'react';
+import './LoginPage.css'; // import a separate CSS file for the component
 
-h1 {
-  font-size: 36px;
-  margin-bottom: 20px;
-}
+const LoginPage = () => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
 
-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+  const handleUsernameChange = (event) => {
+    setUsername(event.target.value);
+  };
 
-label {
-  font-size: 24px;
-  margin-bottom: 10px;
-}
+  const handlePasswordChange = (event) => {
+    setPassword(event.target.value);
+  };
 
-input {
-  padding: 10px;
-  font-size: 18px;
-  margin-bottom: 20px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-}
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    // handle login logic here
+  };
 
-button {
-  padding: 10px 20px;
-  font-size: 18px;
-  border-radius: 5px;
-  background-color: #0077cc;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-}
+  return (
+    <div className="login-page"> {/* add a class for the overall page styling */}
+      <h1>Login</h1>
+      <form onSubmit={handleSubmit}>
+        <label>
+          Username:
+          <input type="text" value={username} onChange={handleUsernameChange} />
+        </label>
+        <br />
+        <label>
+          Password:
+          <input type="password" value={password} onChange={handlePasswordChange} />
+        </label>
+        <br />
+        <button type="submit">Login</button>
+      </form>
+    </div>
+  );
+};
 
-button:hover {
-  background-color: #005fa3;
-}
+export default LoginPage;
