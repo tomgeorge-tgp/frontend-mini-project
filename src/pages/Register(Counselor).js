@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './CounselorSignUpForm.css';
+import './Register(Counselor).css';
 
 const CounselorSignUpForm = () => {
   const [name, setName] = useState('');
