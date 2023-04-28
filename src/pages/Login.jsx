@@ -1,41 +1,51 @@
 import React, { useState } from 'react';
-import './LoginPage.css'; // import a separate CSS file for the component
+import './Login.css';
 
-const LoginPage = () => {
+function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleUsernameChange = (event) => {
-    setUsername(event.target.value);
+  const handleUsernameChange = (e) => {
+    setUsername(e.target.value);
   };
 
-  const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // handle login logic here
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(`Username: ${username} Password: ${password}`);
   };
 
   return (
-    <div className="login-page"> {/* add a class for the overall page styling */}
-      <h1>Login</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Username:
-          <input type="text" value={username} onChange={handleUsernameChange} />
-        </label>
-        <br />
-        <label>
-          Password:
-          <input type="password" value={password} onChange={handlePasswordChange} />
-        </label>
-        <br />
+    <div className="login-container">
+      <h2>Login</h2>
+      <form className="login-form" onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label htmlFor="username">Username</label>
+          <input
+            type="text"
+            id="username"
+            value={username}
+            onChange={handleUsernameChange}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            value={password}
+            onChange={handlePasswordChange}
+            required
+          />
+        </div>
         <button type="submit">Login</button>
       </form>
     </div>
   );
-};
+}
 
-export default LoginPage;
+export default Login;
