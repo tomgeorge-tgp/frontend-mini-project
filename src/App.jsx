@@ -1,15 +1,54 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
-
+import Register from './pages/Register'
+import Login from './pages/Login';
+import Home from './pages/Home';
+import AdminDashboard from './pages/AdminDashboard';
+import CounsilorDashboard from './pages/CounsilorDashboard';
+import UserDashboard from './pages/UserDashoard';
+import Unauthorized from './pages/AuthPage/Unauthorized';
+import RequireAuth from './pages/AuthPage/RequireAuth';
+import { Routes, Route } from 'react-router-dom';
+import Layout from './pages/AuthPage/Layout';
+import Missing from './pages/Missing';
 function App() {
   const [count, setCount] = useState(0)
-
+  const ROLES = {
+    'User': 2001,
+    'Counsilor': 1984,
+    'Admin': 5150
+  }
   return (
-    <div className="App">
-      
-    </div>
+    <Routes>
+    <Route path="/" element={<Layout />}>
+      {/* public routes */}
+      <Route path="login" element={<Login />} />
+      <Route path="register" element={<Register />} />
+      <Route path="/" element={<Home />} />
+      <Route path="unauthorized" element={<Unauthorized />} />
+
+      {/* we want to protect these routes */}
+      <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
+        <Route path="/" element={<UserDashboard/>} />
+      </Route>
+
+      <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
+        <Route path="Admin" element={<AdminDashboard/>} />
+      </Route>
+
+
+      <Route element={<RequireAuth allowedRoles={[ROLES.Counsilor]} />}>
+        <Route path="counsilor" element={<CounsilorDashboard />} />
+      </Route>
+
+      <Route element={<RequireAuth allowedRoles={[ROLES.Editor, ROLES.Admin]} />}>
+        {/* <Route path="lounge" element={<Home />} /> */}
+      </Route>
+
+      {/* catch all */}
+      <Route path="*" element={<Missing />} />
+    </Route>
+  </Routes>
   )
 }
 

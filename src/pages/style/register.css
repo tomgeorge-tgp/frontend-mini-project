@@ -1,0 +1,174 @@
+.register-sigup {
+    color: #000;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    display: block;
+    font-weight: bold;
+    font-size: x-large;
+    margin-top: 1.5em;
+  }
+  
+
+  .register-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 350px;
+    width: 300px;
+    flex-direction: column;
+    gap: 35px;
+    border-radius: 15px;
+    background: #e3e3e3;
+    box-shadow: 16px 16px 32px #c8c8c8,
+          -16px -16px 32px #fefefe;
+    border-radius: 8px;
+  }
+  :focus {
+  outline: 0;
+  border-color: #2260ff;
+  box-shadow: 0 0 0 4px #b5c9fc;
+}
+
+.register-mydict div {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+  justify-content: center;
+}
+
+.register-radio{
+  clip: rect(0 0 0 0);
+  clip-path: inset(100%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+.register-radio:checked +span {
+  box-shadow: 0 0 0 0.0625em #0043ed;
+  background-color: #dee7ff;
+  z-index: 1;
+  color: #0043ed;
+}
+
+.register-label span {
+  display: block;
+  cursor: pointer;
+  background-color: #fff;
+  padding: 0.375em .75em;
+  position: relative;
+  margin-left: .0625em;
+  box-shadow: 0 0 0 0.0625em #b5bfd9;
+  letter-spacing: .05em;
+  color: #3e4963;
+  text-align: center;
+  transition: background-color .5s ease;
+}
+
+.register-label:first-child span {
+  border-radius: .375em 0 0 .375em;
+}
+
+.register-label:last-child span {
+  border-radius: 0 .375em .375em 0;
+}
+
+  .register-inputBox,
+  .register-inputBox1 {
+    position: relative;
+    width: 250px;
+  }
+  
+  .register-inputBox input,
+  .register-inputBox1 input {
+    width: 100%;
+    padding: 10px;
+    outline: none;
+    border: none;
+    color: #000;
+    font-size: 1em;
+    background: transparent;
+    border-left: 2px solid #000;
+    border-bottom: 2px solid #000;
+    transition: 0.1s;
+    border-bottom-left-radius: 8px;
+  }
+  
+  .register-inputBox span,
+  .register-inputBox1 span {
+    margin-top: 5px;
+    position: absolute;
+    left: 0;
+    transform: translateY(-4px);
+    margin-left: 10px;
+    padding: 10px;
+    pointer-events: none;
+    font-size: 12px;
+    color: #000;
+    text-transform: uppercase;
+    transition: 0.5s;
+    letter-spacing: 3px;
+    border-radius: 8px;
+  }
+  
+  .register-inputBox input:valid~span,
+  .register-inputBox input:focus~span {
+    transform: translateX(113px) translateY(-15px);
+    font-size: 0.8em;
+    padding: 5px 10px;
+    background: #000;
+    letter-spacing: 0.2em;
+    color: #fff;
+    border: 2px;
+  }
+  .register-input-name{
+
+  }
+  /* .register-user{
+    transform: translateX(156px) translateY(-15px);
+    font-size: 0.8em;
+    padding: 5px 10px;
+    background: #000;
+    letter-spacing: 0.2em;
+    color: #fff;
+    border: 2px;
+  } */
+  .register-inputBox1 input:valid~span,
+  .register-inputBox1 input:focus~span {
+    transform: translateX(156px) translateY(-15px);
+    font-size: 0.8em;
+    padding: 5px 10px;
+    background: #000;
+    letter-spacing: 0.2em;
+    color: #fff;
+    border: 2px;
+  }
+  
+  .register-inputBox input:valid,
+  .register-inputBox input:focus,
+  .register-inputBox1 input:valid,
+  .register-inputBox1 input:focus {
+    border: 2px solid #000;
+    border-radius: 8px;
+  }
+  
+  .register-enter {
+    height: 45px;
+    width: 100px;
+    border-radius: 5px;
+    border: 2px solid #000;
+    cursor: pointer;
+    background-color: transparent;
+    transition: 0.5s;
+    text-transform: uppercase;
+    font-size: 10px;
+    letter-spacing: 2px;
+    margin-bottom: 3em;
+  }
+  
+  .register-enter:hover {
+    background-color: rgb(0, 0, 0);
+    color: white;
+  }
