@@ -2,6 +2,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useState } from "react";
 import "./style/register.css";
+import "yup-phone";
 
 const RegisterSchema = Yup.object().shape({
   fullName: Yup.string().required("Full name is required"),
@@ -9,6 +10,9 @@ const RegisterSchema = Yup.object().shape({
   password: Yup.string()
     .required("Password is required")
     .min(6, "Password must be at least 6 characters"),
+  phone: Yup.string().max(10,'Phone No is invalid')
+  .required('Phone No is Required'),
+      
   userType: Yup.string().required("User type is required"),
 });
 
@@ -17,6 +21,10 @@ function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [userType, setUserType] = useState("");
+  const [dep, setDep] = useState("");
+  const [year, setYear] = useState("");
+  const [role, setRole] = useState("");
+  const [phone , setPhone] = useState("");
   //   const [touched,setTouched] = useState('false');
   const handleFullNameChange = (event) => {
     console.log("full name", event.target.value);
@@ -25,6 +33,9 @@ function Register() {
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
+  };
+  const handlePhoneChange = (event) => {
+    setPhone(event.target.value.toString());
   };
 
   const handlePasswordChange = (event) => {
@@ -40,6 +51,8 @@ function Register() {
     console.log("Full Name:", fullName);
     console.log("Email:", email);
     console.log("Password:", password);
+    console.log("User Type:", userType);
+    console.log("Phone", phone);
     console.log("User Type:", userType);
   };
 
@@ -90,8 +103,7 @@ function Register() {
                 ) : null}
               </div>
             </div>
-
-            <Field name="fullName" type="text">
+{ userType!="" ? <>  <Field name="fullName" type="text">
               {({ field, meta }) => (
                 <>
                   <div className="register-inputBox1">
@@ -126,6 +138,22 @@ function Register() {
                 </div>
               )}
             </Field>
+            <Field type="number" name="phone">
+              {({ field, meta }) => (
+                <div className="register-inputBox">
+                  <input
+                    {...field}
+                    type="number"
+                    required="required"
+                    onChange={handlePhoneChange}
+                  />
+                  <span>Phone No</span>
+                  {meta.touched && errors.phone && phone === "" && (
+                    <div className="register-error">{errors.phone}</div>
+                  )}
+                </div>
+              )}
+            </Field>
 
             <Field type="password" name="password">
               {({ field, meta }) => (
@@ -143,9 +171,66 @@ function Register() {
                 </div>
               )}
             </Field>
+     {userType != "Counsilor" ? <>       
+            <div className="varing-form">
+            <div className="form-group">
+        {/* <label htmlFor="class">Department</label> */}
+        <select
+          id="class"
+          value={dep}
+          onChange={(event) => setDep(event.target.value)}
+          required
+        >
+          <option value="">Department</option>
+          <option value="CSA">CSA</option>
+          <option value="CSB">CSB</option>
+          <option value="CSC">CSC</option>
+          <option value="CSBS">CSBS</option>
+          <option value="ECA">ECA</option>
+          <option value="ECB">ECB</option>
+          <option value="EB">EB</option>
+          <option value="ME">ME</option>
+          <option value="EEE">EEE</option>
+        </select>
+      </div>
+            <div className="form-group">
+        {/* <label htmlFor="year">Year</label> */}
+        <select
+          id="year"
+          value={year}
+          onChange={(event) => setYear(event.target.value)}
+          required
+        >
+          <option value="">Year</option>
+          <option value="First">First</option>
+          <option value="Second">Second</option>
+          <option value="Third">Third</option>
+          <option value="Fourth">Fourth</option>
+        </select>
+      </div>
+   {userType ==="Core"?   <div className="form-group">
+        {/* <label htmlFor="role">Role</label> */}
+        <select
+          id="role"
+          value={role}
+          onChange={(event) => setRole(event.target.value)}
+          required
+        >
+          <option value="">Role</option>
+          <option value="Chair">Chair</option>
+          <option value="Vice chair">Vice chair</option>
+          <option value="Secretary">Secretary</option>
+          <option value="Treasurer">Treasurer</option>
+          <option value="Event coordinator">Event coordinator</option>
+        </select>
+      </div>
+       : "" }
+       </div>
+       </>: ""}
             <button type="submit" className="register-enter" onClick={handleSubmit}>
               Enter
             </button>
+            </> : ""}  
           </Form>
         )}
       </Formik>
