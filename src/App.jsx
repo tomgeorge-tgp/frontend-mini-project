@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import './App.css'
+import Navbar from './component/NavBar';
 import Register from './pages/Register'
 import Login from './pages/Login';
 import Home from './pages/Home';
@@ -11,6 +12,7 @@ import RequireAuth from './pages/AuthPage/RequireAuth';
 import { Routes, Route } from 'react-router-dom';
 import Layout from './pages/AuthPage/Layout';
 import Missing from './pages/Missing';
+import PostPage from './pages/PostPage';
 function App() {
   const [count, setCount] = useState(0)
   const ROLES = {
@@ -18,13 +20,14 @@ function App() {
     'Counsilor': 1984,
     'Admin': 5150
   }
-  return (
+  return (<>
+  <Navbar/>
     <Routes>
     <Route path="/" element={<Layout />}>
       {/* public routes */}
       <Route path="login" element={<Login />} />
       <Route path="register" element={<Register />} />
-      <Route path="/" element={<Home />} />
+      <Route path="/" element={<PostPage />} />
       <Route path="unauthorized" element={<Unauthorized />} />
 
       {/* we want to protect these routes */}
@@ -49,6 +52,7 @@ function App() {
       <Route path="*" element={<Missing />} />
     </Route>
   </Routes>
+  </>
   )
 }
 
