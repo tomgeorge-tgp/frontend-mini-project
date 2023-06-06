@@ -1,8 +1,37 @@
 import { useState } from 'react';
-import Close from "../assets/close.svg"
+import {useQuery,useMutation,useQueryClient} from "react-query";
+import Close from "../assets/close.svg";
+import { addPost  } from '../api/api';
+import useLocalStorageRef from "../hooks/LocalStorage"
+
+
 function AddPostPopup({ isOpen, onClose, onAdd }) {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [isAnonymous, setIsAnonymous] = useState(false);
+  const queryClient=useQueryClient();
+  const [postData,setPostData] = useState('');
+  const [userData, setUserData, removeUserData] = useLocalStorageRef("user")
+  // Use useMutation to create a signUpMutation object
+  const postAddMutation = useMutation(addPost, {
+    // Handle the success case
+    onSuccess: (postData) => {
+      console.log("here");
+      // TODO: save the user in the state or local storage
+      console.log(postData);
+      queryClient.invalidateQueries("posts");
+      // queryClient.setQueryData("post", postData);
+      console.log("Add post successful!");
+      
+      setPostData(postData);
+    },
+    // Handle the error case
+    onError: (error) => {
+      // Show an error message or toast
+      console.log("Add post failed. Please try again.");
+      console.log(error);
+    },
+  });
 
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
@@ -11,12 +40,26 @@ function AddPostPopup({ isOpen, onClose, onAdd }) {
   const handleContentChange = (e) => {
     setContent(e.target.value);
   };
+  const handleAnonymousChange = (e) => {
+    setIsAnonymous(e.target.value === 'anonymous');
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onAdd({ title, content });
+    
+    let postInfo = {
+      userId:userData.current._id,
+      title: title,
+      anonymous:isAnonymous,
+      content,
+    };
+    
+    postAddMutation.mutate(postInfo);  
+    onAdd(postInfo);
     setTitle('');
     setContent('');
+    setIsAnonymous(false);
+
   };
 
   return (
@@ -37,6 +80,12 @@ function AddPostPopup({ isOpen, onClose, onAdd }) {
             <label htmlFor="content" className="block text-gray-700 font-medium mb-2">Content</label>
             <textarea id="content" value={content} onChange={handleContentChange} className="border border-gray-400 rounded px-4 py-2 w-full h-24 resize-none"></textarea>
           </div>
+          <div className="flex items-center">
+              <input type="radio" id="nonAnonymous" name="postType" value="nonAnonymous" checked={!isAnonymous} onChange={handleAnonymousChange} className="mr-2" />
+              <label htmlFor="nonAnonymous" className="mr-4">Non-anonymous</label>
+              <input type="radio" id="anonymous" name="postType" value="anonymous" checked={isAnonymous} onChange={handleAnonymousChange} className="mr-2" />
+              <label htmlFor="anonymous">Anonymous</label>
+            </div>
           <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded absolute right-4 bottom-4">
             Add
           </button>

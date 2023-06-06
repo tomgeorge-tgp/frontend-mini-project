@@ -13,6 +13,7 @@ import { Routes, Route } from 'react-router-dom';
 import Layout from './pages/AuthPage/Layout';
 import Missing from './pages/Missing';
 import PostPage from './pages/PostPage';
+import PostPageNew from './pages/PostPageNew';
 function App() {
   const [count, setCount] = useState(0)
   const ROLES = {
@@ -21,27 +22,28 @@ function App() {
     'Admin': 5150
   }
   return (<>
-  <Navbar/>
+  {/* <Navbar/> */}
     <Routes>
     <Route path="/" element={<Layout />}>
       {/* public routes */}
-      <Route path="login" element={<Login />} />
-      <Route path="register" element={<Register />} />
-      <Route path="/" element={<PostPage />} />
+      <Route path="/dashboard" element={<AdminDashboard/>}/>
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+      <Route path="/posts" element={<PostPage />} />
       <Route path="unauthorized" element={<Unauthorized />} />
-
+      <Route path="/logout" element={<Login />} />
       {/* we want to protect these routes */}
       <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
-        <Route path="/" element={<UserDashboard/>} />
+        <Route path="/user/dashboard" element={<UserDashboard/>} />
       </Route>
 
       <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
-        <Route path="Admin" element={<AdminDashboard/>} />
+        <Route path="/admin/dashboard/:id" element={<AdminDashboard/>} />
       </Route>
 
 
       <Route element={<RequireAuth allowedRoles={[ROLES.Counsilor]} />}>
-        <Route path="counsilor" element={<CounsilorDashboard />} />
+        <Route path="/counsilor/dashboard/:id" element={<CounsilorDashboard />} />
       </Route>
 
       <Route element={<RequireAuth allowedRoles={[ROLES.Editor, ROLES.Admin]} />}>

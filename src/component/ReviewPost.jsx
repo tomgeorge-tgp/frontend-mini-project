@@ -1,42 +1,73 @@
 import React, { useState } from "react";
-import PostBar from "./PostBar";
+import PostBar from "./AdminViewPostBar";
 import Add from "../assets/add.svg"
 import ReviewPostPopup from './ReviewPostPopup';
-
+import { QueryClient,useQuery,useMutation,QueryCache } from "react-query";
+import {reviewAllPosts,} from "../api/api"
+import { getAllUserPost, deletePost,donePost } from "../api/api";
+import useLocalStorageRef from "../hooks/LocalStorage";
 function ReviewPost() {
-  const [email, setEmail] = useState("");
-  const [posts, setPosts] = useState([
-    {
-      id: 1,
-      title: "My First Post",
-      content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elit Lorem ipsum dolor sit amet, consectetur adipiscing elit Lorem ipsum dolor sit amet, consectetur adipiscing elit Lorem ipsum dolor sit amet, consectetur adipiscing elit",
-      likes: 10,
-      comments: [
-        { id: 1, author: "John", text: "Nice post!" },
-        { id: 2, author: "Jane", text: "I agree4,4rm4fm4gmklm4lmf2!" },
-        { id: 3, author: "John", text: "Nice post!" },
-        { id: 4, author: "Jane", text: "I agree4tgm4gm4lrmg4rm24lmglremg5j5efvhbwfehbwefbvdbvjhrgtigwbrbiqdbweb!" },
-        { id: 5, author: "John", text: "Nice post!grnjbrwjbgfedvbnevbj4rbgjrbnefbvnnrfjrngb4jrgjrthgjrenennewkjnwkjrenkjerfnejfnrenfrvnjrbvwjkrbjwebiow" },
-        { id: 6, author: "Jane", text: "I agree!" },
-      ],
-    },
-    {
-      id: 2,
-      title: "My Second Post",
-      content:
-        "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
-      likes: 5,
-      comments: [
-        { id: 1, author: "Bob", text: "Interesting..." },
-        { id: 2, author: "Alice", text: "I learned something new!" },
-      ],
-    },
-  ]);
+  // const [email, setEmail] = useState("");
+
   const [postData, setPostData] = useState("");
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [allUserPosts,setAllUserPosts] = useState([])
+  const [userData, setUserData, removeUserData] = useLocalStorageRef("user");
+  const {
+    isLoading,
+    isError,
+    error,
+    data:reviewPosts,
+  }=useQuery(['reviewPosts'] , async() => await reviewAllPosts());
+console.log("posts loaded",reviewPosts);
+  const queryClient=new QueryClient();
+
+
+  const deletePostMutation = useMutation(deletePost, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("userPosts");
+    },
+    onError: (error) => {
+      console.log("Failed to add comment:", error);
+    },
+  });
+
+
+  const donePostMutation = useMutation(donePost, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("userPosts");
+    },
+    onError: (error) => {
+      console.log("Failed to add comment:", error);
+    },
+  });
+
+
+
+  const handleAddPost = (post) => {
+    // Handle adding a new post
+    // console.log('New post:', post);
+    setIsPopupOpen(false);
+    setAllUserPosts(post);
+    window.location.reload();
+  };
+
+ 
+  const handleDeletePost = (postId) => {
+    deletePostMutation.mutate({ id: postId, userId: userData.current._id });
+    setAllUserPosts(userPosts => userPosts.filter((post) => post._id !== postId));
+    window.location.reload();
+  };
+  const handleDonePost = (postId) => {
+    // console.log('Done post:', postId);
+    donePostMutation.mutate({ id: postId, userId: userData.current._id });
+    setAllUserPosts(userPosts => userPosts.filter((post) => post._id !== postId));
+    // window.location.reload();
+  };
+
 
   const handlePopupClose = () => {
-    console.log('Popup closed');
+    // console.log('Popup closed');
     setIsPopupOpen(false);
   };
 
@@ -45,30 +76,41 @@ function ReviewPost() {
   };
 
   const handleSubmit = (event) => {
-    // Handle form submission
+    //
   };
+ 
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
+ else if (isError) {
+    return <div>Error: {error.message}</div>;
+  }
+ else{
+
+ 
   return (
     <div className="relative">
       <br/>
       <br/> 
       <div className="h-0.5 bg-black mb-5 "></div>
 
-    {isPopupOpen && <ReviewPostPopup isOpen={isPopupOpen} data={postData} onClose={handlePopupClose} />}
-      {posts.map((post) => (
+    {/* {isPopupOpen && <ReviewPostPopup isOpen={isPopupOpen} data={postData} onClose={handlePopupClose} />} */}
+      {reviewPosts.map((post,index) => (<>
         <div key={post.id} onClick={() => { setIsPopupOpen(true); setPostData(post) }}>
-
-          <PostBar
-            key={post.id}
-            title={post.title}
-            content={post.content}
-            likes={post.likes}
-            comments={post.comments.length}
+         
+        <PostBar
+           key={index}
+           data={post}
+           onDeleteClick={() => handleDeletePost(post._id)}
+           onDoneClick={() => handleDonePost(post._id)}
           />
+     
         </div>
+        </>
       ))}
     </div>
   );
 }
-
+}
 export default ReviewPost;

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Sidebar from "../component/SideBar";
 import AdminDetail from "../component/AdminDetail";
+import UserDetail from "../component/UserDetail";
 import UserPost from "../component/UserPost";
 import ReviewPost from "../component/ReviewPost";
 function AdminDashboard() {
@@ -19,7 +20,7 @@ function AdminDashboard() {
   const [selectedButton, setSelectedButton] = useState(0);
 
   const handleSidebarButtonClick = (index) => {
-    console.log(index)
+    // console.log(index)
     setSelectedButton(index);
     // Perform any additional actions based on the selected button index
   };
@@ -29,14 +30,14 @@ function AdminDashboard() {
        <div className="flex justify-center">
     <h2 className="text-2xl font-bold">Admin Dashboard</h2>
     </div>
-    <div className="flex justify-center mt-8">
+    <div className="flex justify-center mt-8 mb-8">
 
    <Sidebar values={sidebarValues} onButtonClick={handleSidebarButtonClick}/>
     </div>
     
 
    <div  className="flex-1">
-    {selectedButton==0 ? <AdminDetail/>:""}
+    {selectedButton==0 ? <UserDetail/>:""}
     {selectedButton==1 ? <ReviewPost/>:""}
     {selectedButton==2? <UserPost/>:""}
    </div>

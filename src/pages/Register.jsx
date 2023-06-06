@@ -3,6 +3,15 @@ import * as Yup from "yup";
 import { useState } from "react";
 import "./style/register.css";
 import "yup-phone";
+import {signup} from "../api/api";
+import { signupUrl } from "../url/url";
+import {useQuery,useMutation,useQueryClient} from "react-query";
+import useLocalStorageRef from "../hooks/LocalStorage"
+import Cookies from 'js-cookie';
+
+
+
+
 
 const RegisterSchema = Yup.object().shape({
   fullName: Yup.string().required("Full name is required"),
@@ -26,6 +35,29 @@ function Register() {
   const [role, setRole] = useState("");
   const [phone , setPhone] = useState("");
   //   const [touched,setTouched] = useState('false');
+  const [userData, setUserData, removeUserData] = useLocalStorageRef("user")
+   const queryClient=useQueryClient();
+
+    // Use useMutation to create a signUpMutation object
+    const signUpMutation = useMutation(signup, {
+      // Handle the success case
+      onSuccess: (userData) => {
+        console.log("here");
+        // TODO: save the user in the state or local storage
+        console.log(userData);
+        queryClient.setQueryData("user", userData);
+        console.log("Registration successful!");
+        // Navigate to another page or show a success message
+        setUserData(userData);
+      },
+      // Handle the error case
+      onError: (error) => {
+        // Show an error message or toast
+        console.log("Registration failed. Please try again.");
+        console.log(error);
+      },
+    });
+
   const handleFullNameChange = (event) => {
     console.log("full name", event.target.value);
     setFullName(event.target.value);
@@ -46,14 +78,44 @@ function Register() {
     console.log("User type", event.target.value);
     setUserType(event.target.value);
   };
-  const handleSubmit = (event) => {
+  const handleSubmit = async(event) => {
     event.preventDefault();
-    console.log("Full Name:", fullName);
-    console.log("Email:", email);
-    console.log("Password:", password);
-    console.log("User Type:", userType);
-    console.log("Phone", phone);
-    console.log("User Type:", userType);
+
+    let userInfo = {
+      fullname:fullName,
+      phone: phone,
+      email,
+      type:userType,
+      password,
+    };
+    
+    switch (userType) {
+      case "Core":
+        userInfo = {
+          ...userInfo,
+          role,
+          year,
+          department: dep,
+        };
+        break;
+      case "Student":
+        userInfo = {
+          ...userInfo,
+          year,
+          department: dep,
+        };
+        break;
+      default:
+        break;
+    }
+    console.log(userInfo); 
+    try{
+      signUpMutation.mutate(userInfo);  
+    }catch(err)
+    {
+      console.log(err);
+    }
+
   };
 
 
