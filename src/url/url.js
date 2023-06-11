@@ -16,3 +16,7 @@ export const allPosts = "/post/explore";
 export const reviewPosts="/post/review";
 
 export const userAllPostsUrl = "post/user/all/";
+
+export const scheduleUrl="schedule/"
+
+export const bookingUrl ="booking/"

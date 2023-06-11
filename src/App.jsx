@@ -14,6 +14,7 @@ import Layout from './pages/AuthPage/Layout';
 import Missing from './pages/Missing';
 import PostPage from './pages/PostPage';
 import PostPageNew from './pages/PostPageNew';
+import BookingPage from "./pages/Booking";
 function App() {
   const [count, setCount] = useState(0)
   const ROLES = {
@@ -26,10 +27,11 @@ function App() {
     <Routes>
     <Route path="/" element={<Layout />}>
       {/* public routes */}
-      <Route path="/dashboard" element={<AdminDashboard/>}/>
+      <Route path="/dashboard" element={<CounsilorDashboard/>}/>
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/posts" element={<PostPage />} />
+      <Route path="/counsiling" element={<BookingPage/>} />
       <Route path="unauthorized" element={<Unauthorized />} />
       <Route path="/logout" element={<Login />} />
       {/* we want to protect these routes */}

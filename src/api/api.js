@@ -15,6 +15,8 @@ import {
    userAllPostsUrl,
    postDeleteUrl,
    postDoneUrl,
+   scheduleUrl,
+   bookingUrl,
  } from '../url/url';
 
  
@@ -183,7 +185,7 @@ export const addLike =async (likeData)=>{
 }
 
 export const deletePost = async(post)=>{
-  console.log("here before delete post",post);
+  // console.log("here before delete post",post);
   try{
     const response = await api.delete(`${postDeleteUrl}/`,{
       params: {
@@ -199,7 +201,7 @@ export const deletePost = async(post)=>{
 }
 
 export const donePost = async(post)=>{
-  console.log("here before done post",post);
+  // console.log("here before done post",post);
   try{
     const response = await api.put(`${postDoneUrl}/`,{
       params: {
@@ -213,6 +215,58 @@ export const donePost = async(post)=>{
     throw new Error(error.response.data.message);
   }
 }
+
+export const addSchedule =async (scheduleData)=>{
+  
+  //  console.log("here before schedule",scheduleData);
+  try{
+  const response =await api.post(`${scheduleUrl}`,scheduleData)
+  console.log("response",response)
+  return response.data;
+} catch (error) {
+  throw new Error(error.response.data.message);
+}
+}
+
+export const getSchedule =async ()=>{
+  
+  // console.log("here before schedule");
+ try{
+ const response =await api.get(`${scheduleUrl}`)
+ console.log("response",response.data)
+ return response.data;
+} catch (error) {
+ throw new Error(error.response.data.message);
+}
+}
+
+
+
+export const getCounsilorSchedule=async (userId)=>{
+  
+  // console.log("here before schedule",userId);
+ try{
+ const response =await api.get(`${scheduleUrl}${userId}`)
+ console.log("response",response.data)
+ return response.data;
+} catch (error) {
+ throw new Error(error.response.data.message);
+}
+}
+
+
+export const addBooking =async (bookingData)=>{
+  
+  console.log("here before booking",bookingData);
+ try{
+ const response =await api.post(`${bookingUrl}`,bookingData)
+ console.log("response",response)
+ return response.data;
+} catch (error) {
+ throw new Error(error.response.data.message);
+}
+}
+
 
 
 export default api;
