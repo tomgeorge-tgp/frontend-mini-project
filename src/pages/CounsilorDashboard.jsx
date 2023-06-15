@@ -3,81 +3,29 @@ import Modal from "react-modal";
 import Navbar from "../component/NavBar"
 import UserDetails from "../component/UserDetail";
 import Scheduling from '../component/Scheduling';
-
+import  BookingScheduling from '../component/BookingSchedule';
 import { addSchedule,getCounsilorSchedule } from "../api/api";
 import { QueryClient, useQuery, useMutation, QueryCache } from "react-query";
-import useLocalStorageRef from "../hooks/LocalStorage";
+// import useLocalStorageRef from "../hooks/LocalStorage";
 
 
 
 function CounsilorDashboard(){
 
   const [activeComponent, setActiveComponent] = useState('scheduling');
-  const [userData, setUserData, removeUserData] = useLocalStorageRef("user");
-  const renderComponent = (component) => {
-    setActiveComponent(component);
-  };
+  // const [userData, setUserData, removeUserData] = useLocalStorageRef("user");
+  const authData = JSON.parse(localStorage.getItem("auth"));
+  // console.log("authData",authData.user);
 
     const {
     isLoading,
     isError,
     error,
     data:scheduleData,
-  }=useQuery(['scheduleData', userData.current], () => getCounsilorSchedule(userData.current._id));
+  }=useQuery(['scheduleData', authData.user._id], () => getCounsilorSchedule(authData.user._id));
 
   
-  // // const [newPost, setNewPost] = useState('');
-  // const [showAddPostModal, setShowAddPostModal] = useState(false);
-  // const [showEditPostModal, setShowEditPostModal] = useState(false);
-  // const [selectedPost, setSelectedPost] = useState(null);
-
-  // const handleAddPost = () => {
-  //   const newPost = {
-  //     id: Math.floor(Math.random() * 1000) + 1,
-  //     title: newPostTitle,
-  //     content: newPostContent,
-  //     likes: 0,
-  //     comments: [],
-  //   };
-  //   setPosts([...posts, newPost]);
-  //   setNewPostTitle("");
-  //   setNewPostContent("");
-  //   setShowAddPostModal(false);
-  // };
-
-
-
-  // const handleEditPost = () => {
-  //   const updatedPost = {
-  //     ...selectedPost,
-  //     title: editPostTitle,
-  //     content: editPostContent,
-  //   };
-  //   const updatedPosts = posts.map((post) =>
-  //     post.id === selectedPost.id ? updatedPost : post
-  //   );
-  //   setPosts(updatedPosts);
-  //   setEditPostTitle("");
-  //   setEditPostContent("");
-  //   setShowEditPostModal(false);
-  // };
-  // const handleDeletePost = (id) => {
-  //   const filteredPosts = posts.filter((post) => post.id !== id);
-  //   setPosts(filteredPosts);
-  // };
-  // const handleAddComment = (id, author, text) => {
-  //   const updatedPost = {
-  //     ...selectedPost,
-  //     comments: [
-  //       ...selectedPost.comments,
-  //       { id: Math.floor(Math.random() * 1000) + 1, author, text },
-  //     ],
-  //   };
-  //   const updatedPosts = posts.map((post) =>
-  //     post.id === selectedPost.id ? updatedPost : post
-  //   );
-  //   setPosts(updatedPosts);
-  // };
+  // console.log("isLoading",isLoading);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -87,7 +35,11 @@ function CounsilorDashboard(){
     return <div>Error: {error.message}</div>;
   }
 
- else{
+  const renderComponent = (component) => {
+    setActiveComponent(component);
+  };
+
+
   return (<>
     <div className="lg:px-32 py-8 md:px-8 md:py-8">
     
@@ -124,8 +76,7 @@ function CounsilorDashboard(){
         )}
         {activeComponent === 'booked' && (
           <div>
-            <h2>Booking Component</h2>
-            {/* Add your booking component content here */}
+          <BookingScheduling/>
           </div>
         )}
       </div>
@@ -133,7 +84,7 @@ function CounsilorDashboard(){
     </div>
   </>
   )
-}
+
 };
 
 export default CounsilorDashboard;

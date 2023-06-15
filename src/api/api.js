@@ -63,19 +63,19 @@ export const signup =async (userData)=>{
 
 export const login =async (userData)=>{
   
-  console.log("here before signup",userData);
+  console.log("here before login",userData);
   try{
     const response = await api.post(loginUrl,userData);
     console.log("response",response.data)
     console.log("response headers",response.headers)
     // Check if there's a 'Set-Cookie' header in the response
-    const setCookieHeader = response.headers.get('Set-Cookie');
-    if (setCookieHeader) {
-      // Extract the cookie name and value
-      const [cookieName, cookieValue] = setCookieHeader.split('=');
-      // Set the cookie using js-cookie
-      Cookies.set(cookieName, cookieValue);
-    }
+    // const setCookieHeader = response.headers.get('Set-Cookie');
+    // if (setCookieHeader) {
+    //   // Extract the cookie name and value
+    //   const [cookieName, cookieValue] = setCookieHeader.split('=');
+    //   // Set the cookie using js-cookie
+    //   Cookies.set(cookieName, cookieValue);
+    // }
     return response.data;
   } catch (error) {
     throw new Error(error.response.data.message);
@@ -85,7 +85,7 @@ export const login =async (userData)=>{
 export const getUser = async (userData)=>{
   console.log("user",userData);
   try{
-    const response = await api.get(`${userUrl}/${userData._id}`);
+    const response = await api.get(`${userUrl}/${userData}`);
     return response.data;
   }
   catch (error) {
@@ -95,9 +95,10 @@ export const getUser = async (userData)=>{
   
 }
 
-export const updateUser = async (userId,user)=>{
+export const updateUser = async (user)=>{
+  console.log("user",user);
   try{
-    return await api.put(`${userUrl}/${userId}`,user);
+    return await api.put(`${userUrl}/${user._id}`,user);
   } catch (error) {
     throw new Error(error.response.data.message);
   }
@@ -165,7 +166,7 @@ export const addComment =async (comment)=>{
   
   // console.log("here before comment",comment);
   try{
-  const response =await api.post(`${postUrl}/${comment.postId}/comment`,comment)
+  const response =await api.post(`${postUrl}${comment.postId}/comment`,comment)
   console.log("response",response)
   return response.data.comment;
 } catch (error) {
@@ -174,7 +175,7 @@ export const addComment =async (comment)=>{
 } 
 export const addLike =async (likeData)=>{
   
-  // console.log("here before comment",likeData);
+   console.log("here before like",likeData);
   try{
   const response =await api.post(`${postUrl}/${likeData.postId}/like`,likeData)
   console.log("response",response)
@@ -267,6 +268,17 @@ export const addBooking =async (bookingData)=>{
 }
 }
 
+export const getCounsilorBooking=async (userId)=>{
+  
+  // console.log("here before schedule",userId);
+ try{
+ const response =await api.get(`${bookingUrl}${userId}`)
+ console.log("response",response.data)
+ return response.data;
+} catch (error) {
+ throw new Error(error.response.data.message);
+}
+}
 
 
 export default api;

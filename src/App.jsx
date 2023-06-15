@@ -17,17 +17,31 @@ import PostPageNew from './pages/PostPageNew';
 import BookingPage from "./pages/Booking";
 function App() {
   const [count, setCount] = useState(0)
+  // const redirectToDashboard = () => {
+  //   const userRole = localStorage.getItem('userRole'); // Assuming userRole is stored in localStorage
+  //   if (userRole === ROLES.User) {
+  //     navigate('/dashboard/user');
+  //   } else if (userRole === ROLES.Counsilor) {
+  //     navigate('/dashboard/counsilor');
+  //   } else if (userRole === ROLES.Admin) {
+  //     navigate('/dashboard/admin');
+  //   }
+  // };
+
+
+
   const ROLES = {
-    'User': 2001,
-    'Counsilor': 1984,
-    'Admin': 5150
+    'User': "Student",
+    'Counsilor': "Counsilor",
+    'Admin': "Core"
   }
   return (<>
   {/* <Navbar/> */}
     <Routes>
     <Route path="/" element={<Layout />}>
       {/* public routes */}
-      <Route path="/dashboard" element={<CounsilorDashboard/>}/>
+      <Route path="/" element={<Home/>}/>
+      {/* <Route path="/dashboard" element={<AdminDashboard/>}/> */}
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/posts" element={<PostPage />} />
@@ -36,16 +50,16 @@ function App() {
       <Route path="/logout" element={<Login />} />
       {/* we want to protect these routes */}
       <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
-        <Route path="/user/dashboard" element={<UserDashboard/>} />
+        <Route path="/dashboard/user" element={<UserDashboard/>} />
       </Route>
 
       <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
-        <Route path="/admin/dashboard/:id" element={<AdminDashboard/>} />
+        <Route path="/dashboard/admin" element={<AdminDashboard/>} />
       </Route>
 
 
-      <Route element={<RequireAuth allowedRoles={[ROLES.Counsilor]} />}>
-        <Route path="/counsilor/dashboard/:id" element={<CounsilorDashboard />} />
+      <Route element={<RequireAuth allowedRoles={[ROLES.Counsilor]}  />}>
+        <Route path="/dashboard/counsilor" element={<CounsilorDashboard />} />
       </Route>
 
       <Route element={<RequireAuth allowedRoles={[ROLES.Editor, ROLES.Admin]} />}>

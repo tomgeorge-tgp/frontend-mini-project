@@ -6,10 +6,10 @@ import "yup-phone";
 import {signup} from "../api/api";
 import { signupUrl } from "../url/url";
 import {useQuery,useMutation,useQueryClient} from "react-query";
-import useLocalStorageRef from "../hooks/LocalStorage"
+// import useLocalStorageRef from "../hooks/LocalStorage"
 import Cookies from 'js-cookie';
-
-
+import useAuth from "../hooks/useAuth";
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -34,10 +34,11 @@ function Register() {
   const [year, setYear] = useState("");
   const [role, setRole] = useState("");
   const [phone , setPhone] = useState("");
+  const {setAuth}=useAuth();
   //   const [touched,setTouched] = useState('false');
-  const [userData, setUserData, removeUserData] = useLocalStorageRef("user")
+  // const [userData, setUserData, removeUserData] = useLocalStorageRef("user")
    const queryClient=useQueryClient();
-
+   const navigate = useNavigate();
     // Use useMutation to create a signUpMutation object
     const signUpMutation = useMutation(signup, {
       // Handle the success case
@@ -49,6 +50,24 @@ function Register() {
         console.log("Registration successful!");
         // Navigate to another page or show a success message
         setUserData(userData);
+        const accessToken=userData?.token;
+        const roles=userData?.otherData?.type;
+        const user=userData?.otherData;
+        // Navigate to another page or show a success message
+       
+        localStorage.setItem("auth", JSON.stringify({user,roles,accessToken}))
+        setAuth({user,roles,accessToken})
+        //  setUserData(user);
+        localStorage.setItem("user", JSON.stringify(user))
+       
+        if (roles === 'User') {
+          navigate('/dashboard/user');
+        } else if (roles === 'Counsilor') {
+          navigate('/dashboard/counsilor');
+        } else if (roles === 'Admin') {
+          navigate('/dashboard/admin');
+        }
+      
       },
       // Handle the error case
       onError: (error) => {
@@ -292,7 +311,11 @@ function Register() {
             <button type="submit" className="register-enter" onClick={handleSubmit}>
               Enter
             </button>
-            </> : ""}  
+            </> : ""}
+            <a  className="hover:cursor-pointer" onClick={()=>{
+               navigate('/login')
+                }}>
+         login</a>  
           </Form>
         )}
       </Formik>

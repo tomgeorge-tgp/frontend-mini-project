@@ -21,7 +21,7 @@ const Scheduling = (data) => {
 //   const [userAllPosts, setAllUserPosts] = useState([]);
   const queryClient = new QueryClient();
 
-  console.log("schedule",schedule);
+//   console.log("schedule",schedule);
 
 
 

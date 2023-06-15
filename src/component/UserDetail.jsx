@@ -2,7 +2,7 @@ import { useState } from "react";
 import Edit from "../assets/edit.svg"
 import { getUser,updateUser } from "../api/api";
 import { QueryClient,useQuery,useMutation,QueryCache } from "react-query";
-import useLocalStorageRef from "../hooks/LocalStorage"
+// import useLocalStorageRef from "../hooks/LocalStorage"
 
 
 function UserDetail() {
@@ -12,29 +12,39 @@ function UserDetail() {
   const [dep, setDep] = useState("");
   const [year, setYear] = useState("");
   const [role, setRole] = useState("");
-  
   const [description, setDescription] = useState("");
   const [editMode, setEditMode] = useState("Edit profile");
   const [userDetails, setUserDetails] = useState();
-  const [userData, setUserData, removeUserData] = useLocalStorageRef("user")
+  // const [userData, setUserData, removeUserData] = useLocalStorageRef("user")
   const queryClient=new QueryClient();
     // Access the user details from the query cache
   // setUserData( queryClient.getQueryData("user"));
   // console.log("cachedUser", userData.current);
+  const authData = JSON.parse(localStorage.getItem("auth"));
+  // console.log("authData",authData.user._id);
+  // const { isLoading,isError, user, error, isFetching } = useQuery({
+  //   queryKey: ['user', authData.user._id],
+  //   queryFn: async () => {
+  //     const res = await getUser(authData.user._id);
+  //     return res.data;
+  //   },
+  //   refetchInterval: 1000,
+  // });
+  // console.log("user",user)
   const {
     isLoading,
     isError,
     error,
     data:user,
-  }=useQuery(['user', userData.current], () => getUser(userData.current));
-
-  const updateUserMutation = useMutation(updateUser, {
-    onSuccess: () => {
-        // Invalidates cache and refetch 
-        queryClient.invalidateQueries("user")
+  }=useQuery(['user', authData.user._id], () => getUser(authData.user._id));
+ 
+  const updateUserMutation = useMutation((userInfo) => updateUser(userInfo), {
+    onSuccess: (userInfo) => {
+      
 
         setUserData(queryClient.getQueryData("user"));
     }
+    // onSuccess: () => queryClient.invalidateQueries({ queryKey: ['user'] }),
 })
 
 //  setUserDetails(user)
@@ -49,16 +59,23 @@ function UserDetail() {
       phone: phone || user.phone,
       year: year || user.year,
       dept: dep || user.dept,
-      desc: description || user.desc,
+      description: description || user.desc,
     };
-    setEditMode("Edit profile");
-    setPhone("");
-    setYear("");
-    setDep("");
-    setDescription("");
+    console.log("updatedUserData",updatedUserData);
+   updateUserMutation.mutate(updatedUserData,{
+    // onSuccess: () => {
+    //   console.log("Success");
+    //   setValue('')
+    //   setEditMode("Edit profile");
+    //   setPhone("");
+    //   setYear("");
+    //   setDep("");
+    //   setDescription("");
+    // }
+   })
+   
     // setUserDetails(updatedUserData);
-    // console.log("updatedUserData",updatedUserData);
-    updateUserMutation.mutate(user._id,updatedUserData)
+    
   };
 
   if (isLoading) {
@@ -70,11 +87,12 @@ function UserDetail() {
   }
 
  else{
+  console.log("user",user )
   return (
     <div className="bg-zinc-50 px-8 py-8 relative ">
    
       <div className="">
-         <p className="block text-xl font-bold text-gray-700">{user.fullname}</p>   
+         <p className="block text-xl font-bold text-gray-700">{user?.fullname}</p>   
       </div>
      <form>
      <div className="mb-4">
@@ -86,13 +104,13 @@ function UserDetail() {
   id="phone"
   value={phone}
   readOnly={editMode==="Edit profile"? true: false}
-  placeholder={user.phone}
+  placeholder={user?.phone}
   onChange={(e) => setPhone(e.target.value)}
   className={editMode!="Edit profile" ? " mt-4 border   border-gray-300 rounded-md p-2 max-w-lg min-w-32" : " mt-4 max-w-lg text-gray-700 min-w-32 bg-transparent font-semibold border-none outline-none::placeholder text-gray-600"}
 />
           </div>
 
-          {user.type ==="Core" || "Student"? 
+          {user?.type ==="Core" || user?.type ==="Student"? 
           <div className="flex flex-wrap gap-x-4">
           <div className="select-container mb-2">
         <select
@@ -103,7 +121,7 @@ function UserDetail() {
           required
           disabled={editMode === "Edit profile" ? true : false}
         >
-          <option value="">{user.year + " Year"}</option>
+          <option value="">{user?.year + " Year"}</option>
           <option value="First">First</option>
           <option value="Second">Second</option>
           <option value="Third">Third</option>
@@ -122,7 +140,7 @@ function UserDetail() {
           onChange={(event) => setDep(event.target.value)}
           required
         >
-          <option value="">{user.department}</option>
+          <option value="">{user?.department}</option>
           <option value="CSA">CSA</option>
           <option value="CSB">CSB</option>
           <option value="CSC">CSC</option>
@@ -134,7 +152,7 @@ function UserDetail() {
           <option value="EEE">EEE</option>
         </select>
           </div>
-          {user.type ==="Core"?   <div className="form-group">
+          {user?.type ==="Core"?   <div className="form-group">
         {/* <label htmlFor="role">Role</label> */}
         <select
           id="role"
@@ -143,7 +161,7 @@ function UserDetail() {
           className={`w-32 h-10 sm:w-18 bg-transparent font-semibold::placeholder border-none outline-none ${editMode!="Edit profile" ? '' : 'opacity-50 sm:w-18 pointer-events-none appearance-none'}`}
           required
         >
-          <option value="">{user.role}</option>
+          <option value="">{user?.role}</option>
           <option value="Chair">Chair</option>
           <option value="Vice chair">Vice chair</option>
           <option value="Secretary">Secretary</option>
@@ -157,10 +175,10 @@ function UserDetail() {
 
         :" "}   
           <div className="mb-4 ml-2">
-  <p>
+  {/* <p>
     <span className="font-bold mr-1 ">3</span>
     <span className="text-gray-400">posts</span>
-  </p>
+  </p> */}
 </div>
           <div className="mb-4">
             {/* <label htmlFor="description" className="block text-sm font-medium text-gray-700">
@@ -168,8 +186,8 @@ function UserDetail() {
             </label> */}
             <textarea
               id="description"
-              rows="2"
-              placeholder={userData.desc}
+              rows="4"
+              placeholder={user?.description}
               className={editMode!="Edit profile" ? "border border-gray-300 rounded-md p-2 w-full" : "bg-transparent font-semibold::placeholder border-none outline-none w-full"}
               readOnly={editMode==="Edit profile"? true: false}
               value={description}

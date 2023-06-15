@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
-
+import useAuth from "../hooks/useAuth";
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -8,7 +8,7 @@ const Navbar = () => {
     setIsOpen(!isOpen);
   };
   const navigate = useNavigate();
-  
+  const {auth}=useAuth();
   return (
     <nav className="bg-gray-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -23,7 +23,7 @@ const Navbar = () => {
               <a
                 // href="#"
                 className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" onClick={()=>{
-               navigate('/home');
+               navigate('/');
 
                 }}
               >
@@ -41,8 +41,16 @@ const Navbar = () => {
               </a>
               <a
                 // href="#"
-                className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" onClick={()=>{
-               navigate('/dashboard');
+                className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" 
+                onClick={()=>{
+                  if (auth.roles.includes('User')) {
+        navigate('/dashboard/user');
+      } else if (auth.roles.includes('Counsilor')) {
+        navigate('/dashboard/counsilor');
+      } else if (auth.roles.includes('Core')) {
+        navigate('/dashboard/admin');
+      }
+    
 
                 }}
               >
@@ -66,6 +74,14 @@ const Navbar = () => {
               >
                 About
               </a>
+              <button className="relative bg-white text-gray-800 py-2 px-4 rounded-full overflow-hidden transition-colors hover:bg-gray-800 hover:text-white hove:border hover:border-white" 
+              onClick={()=>{
+                navigate('/login');
+              }}>
+            Login
+          <span className="absolute inset-0 bg-black opacity-50 transform scale-0 transition-transform hover:scale-100"></span>
+        </button>
+    
             </div>
           </div>
           <div className="-mr-2 flex sm:hidden">
@@ -147,6 +163,15 @@ const Navbar = () => {
             >
               About
             </a>
+            
+        <button className="relative bg-transparent text-white py-2 px-4 rounded-full overflow-hidden transition-colors hover:bg-gray-800" onClick={()=>{
+                navigate('/login');
+              }}>
+          Login
+          <span className="absolute inset-0 bg-black opacity-50 transform scale-0 transition-transform hover:scale-100"></span>
+        </button>
+    
+
           </div>
         </div>
       )}
