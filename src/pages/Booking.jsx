@@ -23,6 +23,7 @@ const BookingPage = () => {
             console.log(bookingData);
             queryClient.setQueryData("booking", bookingData);
             console.log("Booking ADD!");
+            window.location.reload();
             // Navigate to another page or show a success message
           //   setUserData(userData);
           },

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import useAuth from "../hooks/useAuth";
+// import useAuth from "../hooks/useAuth";
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -8,7 +8,15 @@ const Navbar = () => {
     setIsOpen(!isOpen);
   };
   const navigate = useNavigate();
-  const {auth}=useAuth();
+  // const {auth}=useAuth();
+
+  const handleLogout = () => {
+    localStorage.removeItem("auth"); // Remove the "auth" item from the local storage
+    navigate('/login'); // Redirect to the login page after logout
+  };
+
+
+
   return (
     <nav className="bg-gray-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -74,13 +82,35 @@ const Navbar = () => {
               >
                 About
               </a>
-              <button className="relative bg-white text-gray-800 py-2 px-4 rounded-full overflow-hidden transition-colors hover:bg-gray-800 hover:text-white hove:border hover:border-white" 
+              <div className="ml-4 flex items-center  space-x-4">
+        {/* Rest of the menu items */}
+        {localStorage.getItem("auth") ? (
+          <button
+            className="relative bg-white text-gray-800 py-0 px-4 rounded-full overflow-hidden transition-colors hover:bg-gray-800 hover:text-white hove:border hover:border-white"
+            onClick={handleLogout}
+          >
+            Logout
+            <span className="absolute inset-0 bg-black opacity-50 transform scale-0 transition-transform hover:scale-100"></span>
+          </button>
+        ) : (
+          <button
+            className="relative bg-white text-gray-800 py-2 px-4 rounded-full overflow-hidden transition-colors hover:bg-gray-800 hover:text-white hove:border hover:border-white"
+            onClick={() => {
+              navigate('/login');
+            }}
+          >
+            Login
+            <span className="absolute inset-0 bg-black opacity-50 transform scale-0 transition-transform hover:scale-100"></span>
+          </button>
+        )}
+      </div>
+              {/* <button className="relative bg-white text-gray-800 py-2 px-4 rounded-full overflow-hidden transition-colors hover:bg-gray-800 hover:text-white hove:border hover:border-white" 
               onClick={()=>{
                 navigate('/login');
               }}>
             Login
           <span className="absolute inset-0 bg-black opacity-50 transform scale-0 transition-transform hover:scale-100"></span>
-        </button>
+        </button> */}
     
             </div>
           </div>
@@ -163,13 +193,39 @@ const Navbar = () => {
             >
               About
             </a>
-            
+            <div className="ml-4 flex items-center mt-3 space-x-4">
+        {/* Rest of the menu items */}
+        {localStorage.getItem("auth") ? (
+          <button
+            className="relative bg-white text-gray-800 py-2 px-4 rounded-full overflow-hidden transition-colors hover:bg-gray-800 hover:text-white hove:border hover:border-white"
+            onClick={handleLogout}
+          >
+            Logout
+            <span className="absolute inset-0 bg-black opacity-50 transform scale-0 transition-transform hover:scale-100"></span>
+          </button>
+        ) : (
+          <button
+            className="relative bg-white text-gray-800 py-2 px-4 rounded-full overflow-hidden transition-colors hover:bg-gray-800 hover:text-white hove:border hover:border-white"
+            onClick={() => {
+              navigate('/login');
+            }}
+          >
+            Login
+            <span className="absolute inset-0 bg-black opacity-50 transform scale-0 transition-transform hover:scale-100"></span>
+          </button>
+        )}
+      </div>
+
+
+
+
+{/*             
         <button className="relative bg-transparent text-white py-2 px-4 rounded-full overflow-hidden transition-colors hover:bg-gray-800" onClick={()=>{
                 navigate('/login');
               }}>
           Login
           <span className="absolute inset-0 bg-black opacity-50 transform scale-0 transition-transform hover:scale-100"></span>
-        </button>
+        </button> */}
     
 
           </div>

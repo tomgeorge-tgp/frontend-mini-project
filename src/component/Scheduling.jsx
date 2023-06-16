@@ -36,6 +36,7 @@ const Scheduling = (data) => {
           console.log("Schedule ADD!");
           // Navigate to another page or show a success message
         //   setUserData(userData);
+        window.location.reload();
         },
         // Handle the error case
         onError: (error) => {

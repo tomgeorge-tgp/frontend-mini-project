@@ -43,6 +43,8 @@ function UserDetail() {
       
 
         setUserData(queryClient.getQueryData("user"));
+        setEditMode("Edit Mode") 
+        window.location.reload();
     }
     // onSuccess: () => queryClient.invalidateQueries({ queryKey: ['user'] }),
 })

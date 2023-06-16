@@ -22,6 +22,7 @@ const Schedule = ({ counselorId }) => {
         console.log('Data deleted successfully:', response.data);
         queryClient.invalidateQueries("booking")
         setResponse(response.data)
+        window.location.reload();
       } catch (error) {
           console.error('Error deleting data:', error);       
         } 
