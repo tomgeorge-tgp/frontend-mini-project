@@ -1,12 +1,15 @@
 import { useState } from "react";
+import { useEffect } from "react";
 import "./style/login.css";
 import { loginUrl } from "../url/url";
 import {login} from "../api/api";
 import {useQuery,useMutation,useQueryClient} from "react-query";
+import Spinner from "../component/Spinner";
 //  import useLocalStorageRef from "../hooks/LocalStorage"
 import { Link,useNavigate,useLocation } from 'react-router-dom';
 import useAuth from "../hooks/useAuth";
 function Login() {
+  
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   //  const [ setUserData] = useLocalStorageRef("user")
@@ -75,8 +78,21 @@ function Login() {
       console.log(err);
     }
   };
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulating a delay of 2 seconds before setting isLoading to false
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, []);
   return (
     <div className="flex justify-center items-center h-screen">
+    {isLoading ? (
+        <Spinner />
+      ) : (
       <div className="login-card">
         <a className="login">Log in</a>
         <div className="login-inputBox">
@@ -98,6 +114,7 @@ function Login() {
          register</a>
         <br/>
       </div>
+      )}
     </div>
   );
 }
