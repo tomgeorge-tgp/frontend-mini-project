@@ -1,0 +1,12 @@
+ .spinner-container {
+    position: fixed;
+    top: 50px; /* Adjust this value to position the spinner vertically */
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  .spinner {
+    width: 50px; /* Adjust this value to resize the spinner */
+    height: 50px; /* Adjust this value to resize the spinner */
+  }
+  
