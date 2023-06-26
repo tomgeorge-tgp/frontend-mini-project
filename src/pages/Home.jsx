@@ -1,10 +1,28 @@
-import React from 'react';
+import React,{useEffect} from 'react';
+import {useState} from 'react'
 import { Link } from 'react-router-dom';
 import './style/home.css'; // Add corresponding CSS file
+import Spinner from '../component/Spinner';
+// import { BeatLoader } from 'react-spinners';
 
 const Home = () => {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulating a delay of 2 seconds before setting isLoading to false
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <div className="landing-page">
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <>
       <div className="flex items-center justify-center h-screen bg-gray-100">
         <div className="text-center">
           <h1 className="text-4xl font-bold mb-4 text-gray-800">MindBoosters</h1>
@@ -44,6 +62,8 @@ const Home = () => {
           {/* Add your footer icons here */}
         </div>
       </footer>
+      </>
+      )}
     </div>
   );
 };
