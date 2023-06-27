@@ -1,11 +1,35 @@
-import React from 'react';
+import React,{useEffect} from 'react';
+import {useState} from 'react'
 import { Link } from 'react-router-dom';
 import './style/home.css'; // Add corresponding CSS file
+import Spinner from '../component/Spinner';
+// import { BeatLoader } from 'react-spinners';
+import {Slider} from "../component/sliderfolder/Slider"
+import {slides} from "../component/sliderfolder/slider.json"
+import I1 from "../assets/counsel.jpg" ;
+import I2 from "../assets/blopos.jpg" ;
 
 const Home = () => {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulating a delay of 2 seconds before setting isLoading to false
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <div className="landing-page">
-      <div className="flex items-center justify-center h-screen bg-gray-100">
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <>
+      <div className="flex items-center aka justify-center h-screen bg-gray-100">
+      <div className="slidermain"><Slider data={slides}/>
+      </div>
         <div className="text-center">
           <h1 className="text-4xl font-bold mb-4 text-gray-800">MindBoosters</h1>
           <p className="text-lg text-gray-600">Empowering Minds, Inspiring Growth</p>
@@ -15,7 +39,7 @@ const Home = () => {
         <section className="post-section bg-gray-200 py-8">
           <div className="container mx-auto flex flex-col md:flex-row items-center">
             <div className="md:w-1/2">
-              <img src="post-image.png" alt="Post Image" className="max-w-full" />
+              <img src={I2} alt="Post Image" className="w-4/6 h-2/4" />
             </div>
             <div className="md:w-1/2 px-4">
               <h2 className="text-2xl font-bold mb-4">Posts</h2>
@@ -29,7 +53,7 @@ const Home = () => {
         <section className="counseling-section bg-gray-300 py-8">
           <div className="container mx-auto flex flex-col md:flex-row items-center">
             <div className="md:w-1/2">
-              <img src="counseling-image.png" alt="Counseling Image" className="max-w-full" />
+              <img src={I1} alt="Counseling Image" className="w-4/6 h-4/6" />
             </div>
             <div className="md:w-1/2 px-4">
               <h2 className="text-2xl font-bold mb-4">Counseling</h2>
@@ -44,6 +68,8 @@ const Home = () => {
           {/* Add your footer icons here */}
         </div>
       </footer>
+      </>
+      )}
     </div>
   );
 };

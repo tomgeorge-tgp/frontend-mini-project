@@ -43,5 +43,12 @@
     .container {
       padding: 0 10px;
     }
+
+  }
+  .slidermain{
+    margin-right: 10rem;
+  }
+  .aka{
+    background-image: linear-gradient(79deg,black,white,#ffc000);
   }
   
