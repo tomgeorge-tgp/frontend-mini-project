@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { addBooking,getSchedule } from "../api/api";
 import { QueryClient, useQuery, useMutation, QueryCache } from "react-query";
 import useLocalStorageRef from "../hooks/LocalStorage";
+import Swal from 'sweetalert2';
 const BookingPage = () => {
   const { isLoading, isError, error, data: schedulesData } = useQuery(['schedulesData'], () => getSchedule());
 
@@ -10,7 +11,7 @@ const BookingPage = () => {
   //   const [userAllPosts, setAllUserPosts] = useState([]);
     const queryClient = new QueryClient();
   
-    // console.log("schedule",schedule);
+    console.log("schedule",schedulesData);
   
   
   
@@ -23,9 +24,16 @@ const BookingPage = () => {
             console.log(bookingData);
             queryClient.setQueryData("booking", bookingData);
             console.log("Booking ADD!");
-            window.location.reload();
             // Navigate to another page or show a success message
-          //   setUserData(userData);
+            //   setUserData(userData);
+            Swal.fire({
+              position: 'center',
+              icon: 'success',
+              title: 'Bookking Successful!',
+              showConfirmButton: false,
+              timer: 1500
+            });
+            window.location.reload();
           },
           // Handle the error case
           onError: (error) => {

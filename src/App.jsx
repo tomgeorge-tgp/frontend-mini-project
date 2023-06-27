@@ -4,7 +4,7 @@ import Navbar from './component/NavBar';
 import Register from './pages/Register'
 import Login from './pages/Login';
 import Home from './pages/Home';
-import AdminDashboard from './pages/AdminDashboard';
+import AdminDashboard from './pages/CoreDashboard';
 import CounsilorDashboard from './pages/CounsilorDashboard';
 import UserDashboard from './pages/UserDashoard';
 import Unauthorized from './pages/AuthPage/Unauthorized';
@@ -45,7 +45,7 @@ function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/posts" element={<PostPage />} />
-      <Route path="/counsiling" element={<BookingPage/>} />
+      <Route path="/counseling" element={<BookingPage/>} />
       <Route path="unauthorized" element={<Unauthorized />} />
       <Route path="/logout" element={<Login />} />
       {/* we want to protect these routes */}
@@ -54,7 +54,7 @@ function App() {
       </Route>
 
       <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
-        <Route path="/dashboard/admin" element={<AdminDashboard/>} />
+        <Route path="/dashboard/core" element={<AdminDashboard/>} />
       </Route>
 
 

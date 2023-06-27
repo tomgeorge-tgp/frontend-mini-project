@@ -11,7 +11,9 @@ import Cookies from 'js-cookie';
 import useAuth from "../hooks/useAuth";
 import { useNavigate } from 'react-router-dom';
 
-
+import i1 from "../assets/gl.png";
+import i2 from "../assets/fb.png";
+import i3 from "../assets/ld.png";
 
 const RegisterSchema = Yup.object().shape({
   fullName: Yup.string().required("Full name is required"),
@@ -343,6 +345,11 @@ function Register() {
               Enter
             </button>
             </> : ""}
+      { userType=="" ? <>        <div className="flex" >
+             <img src={i2} className="p-3"/>
+             <img src={i1} className="p-3"/>
+             <img src={i3} className="p-3"/>
+            </div></> :""}
             <a  className="hover:cursor-pointer" onClick={()=>{
                navigate('/login')
                 }}>

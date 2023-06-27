@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
-// import useAuth from "../hooks/useAuth";
+import useAuth from "../hooks/useAuth";
 import LO from "../assets/lo2.png";
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -9,7 +9,7 @@ const Navbar = () => {
     setIsOpen(!isOpen);
   };
   const navigate = useNavigate();
-  // const {auth}=useAuth();
+  const {auth}=useAuth();
 
   const handleLogout = () => {
     localStorage.removeItem("auth"); // Remove the "auth" item from the local storage
@@ -51,7 +51,7 @@ const Navbar = () => {
                 // href="#"
                 className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" 
                 onClick={()=>{
-                  if (auth.roles.includes('User')) {
+                  if (auth.roles.includes('Student')) {
         navigate('/dashboard/user');
       } else if (auth.roles.includes('Counsilor')) {
         navigate('/dashboard/counsilor');
@@ -67,11 +67,11 @@ const Navbar = () => {
               <a
               // href="#"
               className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium" onClick={()=>{
-               navigate('/counsiling');
+               navigate('/counseling');
 
                 }}
             >
-              Counsiling
+              Counseling
             </a>
               <a
                 // href="#"
@@ -185,7 +185,7 @@ const Navbar = () => {
               href="#"
               className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
             >
-              Counsiling
+              Counseling
             </a>
             <a
               href="#"

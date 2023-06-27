@@ -4,7 +4,7 @@ import AdminDetail from "../component/AdminDetail";
 import UserDetail from "../component/UserDetail";
 import UserPost from "../component/UserPost";
 import ReviewPost from "../component/ReviewPost";
-function AdminDashboard() {
+function CoreDashboard() {
   const [email, setEmail] = useState("");
 
 
@@ -28,7 +28,7 @@ function AdminDashboard() {
   return (
     <div className="lg:px-32 py-8 md:px-8 md:py-8 ">
        <div className="flex justify-center">
-    <h2 className="text-2xl font-bold">Admin Dashboard</h2>
+    <h2 className="text-2xl font-bold">Core Dashboard</h2>
     </div>
     <div className="flex justify-center mt-8 mb-8">
 
@@ -46,4 +46,4 @@ function AdminDashboard() {
   );
 }
 
-export default  AdminDashboard;
+export default  CoreDashboard;

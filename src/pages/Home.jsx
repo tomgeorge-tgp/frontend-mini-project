@@ -43,8 +43,8 @@ const Home = () => {
             </div>
             <div className="md:w-1/2 px-4">
               <h2 className="text-2xl font-bold mb-4">Posts</h2>
-              <p>Welcome to MindBoosters! Express yourself freely and connect with a community that understands you. Share your thoughts and feelings anonymously or with your name. Engage with others through likes and comments, fostering a supportive environment. Join MindBoosters, where your voice matters and personal growth thrives. Start sharing, supporting, and growing in just a few clicks. Boost your mind and be a part of our inclusive community. Together, we can make a difference.</p>
-              <Link to="/posts" className="bg-black text-white px-4 py-2 mt-4">Read More</Link>
+              <p className="mb-4 ">Welcome to MindBoosters! Express yourself freely and connect with a community that understands you. Share your thoughts and feelings anonymously or with your name. Engage with others through likes and comments, fostering a supportive environment. Join MindBoosters, where your voice matters and personal growth thrives. Start sharing, supporting, and growing in just a few clicks. Boost your mind and be a part of our inclusive community. Together, we can make a difference.</p>
+              <Link to="/posts" className="bg-black text-white px-4 py-2 mt-4">Read Now</Link>
             </div>
           </div>
         </section>
@@ -57,7 +57,7 @@ const Home = () => {
             </div>
             <div className="md:w-1/2 px-4">
               <h2 className="text-2xl font-bold mb-4">Counseling</h2>
-              <p>Seeking support? MindBoosters offers counseling services exclusively for students. With our secure login system, you can easily book counseling sessions tailored to your needs. Our experienced counselors provide a compassionate and confidential space to address academic stress, relationships, and mental health concerns. We believe in empowering students on their journey to personal well-being. Take a step towards a brighter future and access professional guidance. Register, login, and embark on a transformative counseling experience. Your mental health matters, and we're here to support you every step of the way.</p>
+              <p className="mb-4">Seeking support? MindBoosters offers counseling services exclusively for students. With our secure login system, you can easily book counseling sessions tailored to your needs. Our experienced counselors provide a compassionate and confidential space to address academic stress, relationships, and mental health concerns. We believe in empowering students on their journey to personal well-being. Take a step towards a brighter future and access professional guidance. Register, login, and embark on a transformative counseling experience. Your mental health matters, and we're here to support you every step of the way.</p>
               <Link to="/counseling" className="bg-black text-white px-4 py-2 mt-4">Book Now</Link>
             </div>
           </div>

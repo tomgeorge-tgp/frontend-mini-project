@@ -9,6 +9,9 @@ import useAuth from "../hooks/useAuth";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import Swal from 'sweetalert2';
+import i1 from "../assets/gl.png";
+import i2 from "../assets/fb.png";
+import i3 from "../assets/ld.png";
 function Login() {
 
   const [email, setEmail] = useState("");
@@ -29,12 +32,12 @@ function Login() {
       localStorage.setItem("auth", JSON.stringify({ user, roles, accessToken }));
       localStorage.setItem("user", JSON.stringify(user));
       setAuth({ user, roles, accessToken });
-      if (roles.includes('User')) {
+      if (roles.includes('Student')) {
         navigate('/dashboard/user');
       } else if (roles.includes('Counsilor')) {
         navigate('/dashboard/counsilor');
       } else if (roles.includes('Core')) {
-        navigate('/dashboard/admin');
+        navigate('/dashboard/core');
       }
       Swal.fire({
         position: 'center',
@@ -91,7 +94,9 @@ function Login() {
         <Spinner />
       ) : (
         <div className="login-card">
+        <div className="mt-2">
           <a className="login">Log in</a>
+          </div>
           <div className="login-inputBox">
             <input type="text" required="required" onChange={handleEmailChange} />
             <span className="login-user">Email</span>
@@ -119,6 +124,11 @@ function Login() {
           <button className="login-enter" onClick={handleSubmit}>
             Enter
           </button>
+          <div className="flex" >
+          <img src={i2} className="p-3"/>
+          <img src={i1} className="p-3"/>
+          <img src={i3} className="p-3"/>
+        </div>
           <Link to="/register" className="hover:cursor-pointer">
             Register
           </Link>
