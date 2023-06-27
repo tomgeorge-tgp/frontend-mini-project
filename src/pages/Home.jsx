@@ -6,6 +6,8 @@ import Spinner from '../component/Spinner';
 // import { BeatLoader } from 'react-spinners';
 import {Slider} from "../component/sliderfolder/Slider"
 import {slides} from "../component/sliderfolder/slider.json"
+import I1 from "../assets/counsel.jpg" ;
+import I2 from "../assets/blopos.jpg" ;
 
 const Home = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -37,7 +39,7 @@ const Home = () => {
         <section className="post-section bg-gray-200 py-8">
           <div className="container mx-auto flex flex-col md:flex-row items-center">
             <div className="md:w-1/2">
-              <img src="post-image.png" alt="Post Image" className="max-w-full" />
+              <img src={I2} alt="Post Image" className="w-4/6 h-2/4" />
             </div>
             <div className="md:w-1/2 px-4">
               <h2 className="text-2xl font-bold mb-4">Posts</h2>
@@ -51,7 +53,7 @@ const Home = () => {
         <section className="counseling-section bg-gray-300 py-8">
           <div className="container mx-auto flex flex-col md:flex-row items-center">
             <div className="md:w-1/2">
-              <img src="counseling-image.png" alt="Counseling Image" className="max-w-full" />
+              <img src={I1} alt="Counseling Image" className="w-4/6 h-4/6" />
             </div>
             <div className="md:w-1/2 px-4">
               <h2 className="text-2xl font-bold mb-4">Counseling</h2>
