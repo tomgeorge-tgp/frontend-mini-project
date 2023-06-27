@@ -31,6 +31,7 @@ function Register() {
   const [password, setPassword] = useState("");
   const [userType, setUserType] = useState("");
   const [dep, setDep] = useState("");
+  const [pinNumber,setPinNumber]= useState("");
   const [year, setYear] = useState("");
   const [role, setRole] = useState("");
   const [phone , setPhone] = useState("");
@@ -49,9 +50,10 @@ function Register() {
         queryClient.setQueryData("user", userData);
         console.log("Registration successful!");
         // Navigate to another page or show a success message
-        setUserData(userData);
+        // setUserData(userData);
         const accessToken=userData?.token;
-        const roles=userData?.otherData?.type;
+        // const roles=userData?.otherData?.type;
+        const roles=[userData?.otherData?.type];
         const user=userData?.otherData;
         // Navigate to another page or show a success message
        
@@ -60,12 +62,12 @@ function Register() {
         //  setUserData(user);
         localStorage.setItem("user", JSON.stringify(user))
        
-        if (roles === 'User') {
+        if (roles.includes('Student')) {
           navigate('/dashboard/user');
-        } else if (roles === 'Counsilor') {
+        } else if (roles.includes('Counsilor')) {
           navigate('/dashboard/counsilor');
-        } else if (roles === 'Admin') {
-          navigate('/dashboard/admin');
+        } else if (roles.includes('Core')) {
+          navigate('/dashboard/core');
         }
       
       },
@@ -97,6 +99,10 @@ function Register() {
     console.log("User type", event.target.value);
     setUserType(event.target.value);
   };
+  const handlePinNumberChange = (event) => {
+     console.log("Pin number", event.target.value);
+     setPinNumber(event.target.value);
+  };  
   const handleSubmit = async(event) => {
     event.preventDefault();
 
@@ -115,8 +121,14 @@ function Register() {
           role,
           year,
           department: dep,
+          pinNumber: pinNumber,
         };
         break;
+      case "Counsilor":
+        userInfo = {
+         ...userInfo,
+         pinNumber: pinNumber,
+        };
       case "Student":
         userInfo = {
           ...userInfo,
@@ -252,6 +264,25 @@ function Register() {
                 </div>
               )}
             </Field>
+            {userType == "Counsilor" || userType =="Core" ? <> 
+            <Field type="pin number" name="pin number">
+              {({ field, meta }) => (
+                <div className="register-inputBox">
+                  <input
+                    {...field}
+                    type="number"
+                    required="required"
+                    onChange={handlePinNumberChange}
+                  />
+                  <span>Pin Number</span>
+                  {meta.touched && errors.pinNumber && (
+                    <div className="register-error">{errors.pinNumber}</div>
+                  )}
+                </div>
+              )}
+            </Field>
+           </>
+           :"" }
      {userType != "Counsilor" ? <>       
             <div className="varing-form">
             <div className="form-group">

@@ -32,7 +32,7 @@ function CounsilorDashboard() {
     <>
       <div className="lg:px-32 py-8 md:px-8 md:py-8">
         <div className="flex justify-center">
-          <h2 className="text-2xl font-bold">Counsilor Dashboard</h2>
+          <h2 className="text-2xl font-bold">Counsellor Dashboard</h2>
         </div>
         <UserDetails />
         <div className="bg-gray-100 py-1">
