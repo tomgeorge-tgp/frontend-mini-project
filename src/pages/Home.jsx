@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import './style/home.css'; // Add corresponding CSS file
 import Spinner from '../component/Spinner';
 // import { BeatLoader } from 'react-spinners';
+import {Slider} from "../component/sliderfolder/Slider"
+import {slides} from "../component/sliderfolder/slider.json"
 
 const Home = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -23,7 +25,9 @@ const Home = () => {
         <Spinner />
       ) : (
         <>
-      <div className="flex items-center justify-center h-screen bg-gray-100">
+      <div className="flex items-center aka justify-center h-screen bg-gray-100">
+      <div className="slidermain"><Slider data={slides}/>
+      </div>
         <div className="text-center">
           <h1 className="text-4xl font-bold mb-4 text-gray-800">MindBoosters</h1>
           <p className="text-lg text-gray-600">Empowering Minds, Inspiring Growth</p>

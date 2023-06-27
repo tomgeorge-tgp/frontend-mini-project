@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 // import useAuth from "../hooks/useAuth";
+import LO from "../assets/lo2.png";
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -22,9 +23,8 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
-            <div className="flex-shrink-0">
-              <span className="text-white text-lg font-semibold">Logo</span>
-            </div>
+
+            <img style={{width:"100%",height:"100%"}} src={LO} alt="logo" />
           </div>
           <div className="hidden sm:block">
             <div className="ml-4 flex items-center mt-3 space-x-4">
