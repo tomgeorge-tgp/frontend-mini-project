@@ -40,6 +40,7 @@ function UserPost() {
     // Handle adding a new post
     console.log('New post:', post);
     setIsPopupOpen(false);
+    queryClient.invalidateQueries("booking")
     setAllUserPosts(post);
     window.location.reload();
   };

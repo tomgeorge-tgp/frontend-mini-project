@@ -186,7 +186,7 @@ export const addLike =async (likeData)=>{
 }
 
 export const deletePost = async(post)=>{
-  // console.log("here before delete post",post);
+  console.log("here before delete post",post);
   try{
     const response = await api.delete(`${postDeleteUrl}/`,{
       params: {

@@ -6,8 +6,10 @@ import { useQuery, useMutation, useQueryClient } from "react-query";
 import Spinner from "../component/Spinner";
 import { Link, useNavigate } from 'react-router-dom';
 import useAuth from "../hooks/useAuth";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import openEye from "../assets/openeye.svg";
+import closeEye from "../assets/eyeclosed.svg";
 import Swal from 'sweetalert2';
 import i1 from "../assets/gl.png";
 import i2 from "../assets/fb.png";
@@ -110,11 +112,12 @@ function Login() {
               onChange={handlePasswordChange}
             />
             <span>Password</span>
-            <FontAwesomeIcon
+            {/* <FontAwesomeIcon
               className="login-password-icon"
               icon={showPassword ? faEyeSlash : faEye}
               onClick={toggleShowPassword}
-            />
+            /> */}
+            {<img className="login-password-icon" src={showPassword? closeEye:openEye} onClick={toggleShowPassword}/>}
           </div>
 
           {logInMutation.isError && (

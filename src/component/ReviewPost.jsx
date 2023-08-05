@@ -49,14 +49,15 @@ console.log("posts loaded",reviewPosts);
     // console.log('New post:', post);
     setIsPopupOpen(false);
     setAllUserPosts(post);
-    window.location.reload();
+     window.location.reload();
   };
 
  
   const handleDeletePost = (postId) => {
+    console.log("delete post", postId);
     deletePostMutation.mutate({ id: postId, userId: userData.current._id });
     setAllUserPosts(userPosts => userPosts.filter((post) => post._id !== postId));
-    window.location.reload();
+     window.location.reload();
   };
   const handleDonePost = (postId) => {
     // console.log('Done post:', postId);
