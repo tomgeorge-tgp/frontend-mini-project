@@ -21,7 +21,7 @@ import {
 
  
  const api = axios.create({
-   baseURL: 'http://localhost:5000', // Replace with your backend server URL
+   baseURL: 'https://mini-pxft.onrender.com/', // Replace with your backend server URL
   //  headers: {
   //    'Content-Type': 'application/json',
   //    'Accept': '*/*'
